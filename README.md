@@ -1,4 +1,23 @@
-# AttritionUi
+# AI Employee Attrition Risk Analyzer
+
+## Description
+This project helps HR teams predict employees at risk of leaving based on attendance, feedback, and behavior.
+
+## Tech Stack
+- Angular (Frontend)
+- ASP.NET Core (Backend - upcoming)
+- MS SQL Server (Database)
+
+## Current Progress
+- Database designed and tables created
+- Angular project setup completed
+- Login page created
+- Basic navigation to dashboard implemented
+
+## Next Steps
+- Improve UI
+- Add Employee module
+- Connect backend APIs# AttritionUi
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
 
