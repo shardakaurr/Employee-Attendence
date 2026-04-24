@@ -1,0 +1,8 @@
+<h2>Employee Survey</h2>
+
+<div *ngFor="let q of questions">
+  <p>{{ q.question }}</p>
+  <input [(ngModel)]="q.answer">
+</div>
+
+<button (click)="submit()">Submit</button>

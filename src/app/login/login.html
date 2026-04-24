@@ -1,3 +1,14 @@
-<h2>Login Page</h2>
+<div class="login-container">
+  <h2>Login</h2>
 
-<button (click)="goToDashboard()">Login</button>
+<input type="text" placeholder="Enter Name" [(ngModel)]="username">
+
+<select [(ngModel)]="role">
+  <option value="">Select Role</option>
+  <option value="employee">Employee</option>
+  <option value="hr">HR</option>
+  <option value="manager">Manager</option>
+</select>
+
+<button (click)="login()">Login</button>
+</div>

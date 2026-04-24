@@ -1,30 +1,57 @@
-/* You can add global styles to this file, and also import other style files */
 body {
+  background-color: #f4f6f9;
   font-family: Arial, sans-serif;
-  margin: 20px;
+  margin: 0;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+  margin-top: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 h2 {
   text-align: center;
 }
 
-table {
-  border-collapse: collapse;
-  width: 80%;
-  margin: 20px auto;
+button {
+  padding: 8px 12px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
 }
 
-th, td {
-  padding: 10px;
-  text-align: center;
+button:hover {
+  background-color: #0056b3;
+}
+
+input, select {
+  padding: 8px;
+  margin: 5px;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: #007bff;
+  color: white;
 }
 
-button {
-  padding: 6px 10px;
-  margin: 5px;
-  cursor: pointer;
+td, th {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
 }

@@ -10,48 +10,50 @@ import { FormsModule } from '@angular/forms';
 })
 export class EmployeeComponent {
 
-  // Employee list
   employees = [
-    { name: 'Rahul', department: 'IT', role: 'Developer' },
-    { name: 'Anjali', department: 'HR', role: 'Manager' }
-  ];
+  { name: 'Rahul Sharma', department: 'IT', role: 'Developer' },
+  { name: 'Anjali Verma', department: 'HR', role: 'Manager' },
+  { name: 'Rohit Kumar', department: 'Finance', role: 'Analyst' },
+  { name: 'Neha Singh', department: 'IT', role: 'Tester' },
+  { name: 'Amit Patel', department: 'Operations', role: 'Executive' }
+];
 
-  // Show / hide form
   showForm = false;
 
-  // New employee object
+  searchText = '';
+
   newEmployee = {
     name: '',
     department: '',
     role: ''
   };
 
-  // Toggle form
   toggleForm() {
     this.showForm = !this.showForm;
   }
 
-  // Add employee
   addEmployee() {
     if (this.newEmployee.name && this.newEmployee.department && this.newEmployee.role) {
-      
+
       this.employees.push({
         name: this.newEmployee.name,
         department: this.newEmployee.department,
         role: this.newEmployee.role
       });
 
-      // Reset form
       this.newEmployee = { name: '', department: '', role: '' };
-
-      // Hide form
       this.showForm = false;
     }
   }
 
-  // Delete employee
   deleteEmployee(index: number) {
     this.employees.splice(index, 1);
+  }
+
+  getFilteredEmployees() {
+    return this.employees.filter(emp =>
+      emp.name.toLowerCase().includes(this.searchText.toLowerCase())
+    );
   }
 
 }

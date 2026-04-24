@@ -1,31 +1,39 @@
-<h2>Employee List</h2>
+<div class="container">
 
-<div style="text-align:center;">
-  <button (click)="toggleForm()">Add Employee</button>
+  <h2>Employee List</h2>
+
+  <div style="text-align:center;">
+    <button (click)="toggleForm()">Add Employee</button>
+  </div>
+
+  <div style="text-align:center; margin:10px;">
+    <input placeholder="Search..." [(ngModel)]="searchText">
+  </div>
+
+  <div *ngIf="showForm" style="text-align:center;">
+    <input placeholder="Name" [(ngModel)]="newEmployee.name"><br>
+    <input placeholder="Department" [(ngModel)]="newEmployee.department"><br>
+    <input placeholder="Role" [(ngModel)]="newEmployee.role"><br>
+
+    <button (click)="addEmployee()">Save</button>
+  </div>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Department</th>
+      <th>Role</th>
+      <th>Action</th>
+    </tr>
+
+    <tr *ngFor="let emp of getFilteredEmployees(); let i = index">
+      <td>{{ emp.name }}</td>
+      <td>{{ emp.department }}</td>
+      <td>{{ emp.role }}</td>
+      <td>
+        <button (click)="deleteEmployee(i)">Delete</button>
+      </td>
+    </tr>
+  </table>
+
 </div>
-
-<div *ngIf="showForm" style="text-align:center; margin-top:10px;">
-  <input placeholder="Name" [(ngModel)]="newEmployee.name"><br><br>
-  <input placeholder="Department" [(ngModel)]="newEmployee.department"><br><br>
-  <input placeholder="Role" [(ngModel)]="newEmployee.role"><br><br>
-
-  <button (click)="addEmployee()">Save</button>
-</div>
-
-<table border="1">
-  <tr>
-    <th>Name</th>
-    <th>Department</th>
-    <th>Role</th>
-    <th>Action</th>
-  </tr>
-
-  <tr *ngFor="let emp of employees; let i = index">
-    <td>{{ emp.name }}</td>
-    <td>{{ emp.department }}</td>
-    <td>{{ emp.role }}</td>
-    <td>
-      <button (click)="deleteEmployee(i)">Delete</button>
-    </td>
-  </tr>
-</table>
