@@ -1,8 +1,22 @@
-<h2>Employee Survey</h2>
+<h2>Survey</h2>
 
-<div *ngFor="let q of questions">
-  <p>{{ q.question }}</p>
-  <input [(ngModel)]="q.answer">
+<div *ngFor="let q of paginatedQuestions">
+
+  <p>{{ q.q }}</p>
+
+  <div *ngIf="q.type === 'radio'">
+    <label><input type="radio" [(ngModel)]="q.answer" value="Yes"> Yes</label>
+    <label><input type="radio" [(ngModel)]="q.answer" value="No"> No</label>
+  </div>
+
+  <div *ngIf="q.type === 'text'">
+    <input [(ngModel)]="q.answer">
+  </div>
+
 </div>
 
+<button (click)="prev()" [disabled]="currentPage===0">Prev</button>
+<button (click)="next()" [disabled]="(currentPage+1)*pageSize>=questions.length">Next</button>
+
+<br><br>
 <button (click)="submit()">Submit</button>

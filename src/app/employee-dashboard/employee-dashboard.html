@@ -1,0 +1,32 @@
+<div class="container">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3>Employee Panel</h3>
+
+    <button (click)="showProfile()">My Profile</button>
+    <button (click)="openSurvey()">Take Survey</button>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- PROFILE -->
+    <div *ngIf="!showSurvey">
+      <h2>My Profile</h2>
+
+      <img src="https://via.placeholder.com/120" alt="profile">
+
+      <p><b>Name:</b> Rahul Sharma</p>
+      <p><b>Department:</b> IT</p>
+      <p><b>Role:</b> Developer</p>
+    </div>
+
+    <!-- SURVEY -->
+    <div *ngIf="showSurvey">
+      <app-survey></app-survey>
+    </div>
+
+  </div>
+
+</div>

@@ -1,29 +1,75 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
+import { Router } from '@angular/router';
+
+import { ApiService } from '../services/api';
 
 @Component({
   selector: 'app-login',
+
   standalone: true,
-  imports: [FormsModule, CommonModule],
+
+  imports: [FormsModule],
+
   templateUrl: './login.html',
+
   styleUrls: ['./login.css']
 })
+
 export class LoginComponent {
 
   username = '';
-  role = '';
 
-  constructor(private router: Router) {}
+  password = '';
+
+  constructor(
+    private api: ApiService,
+    private router: Router
+  ) {}
 
   login() {
-    if (this.role === 'hr' || this.role === 'manager') {
-      this.router.navigate(['/dashboard']);
-    } 
-    else if (this.role === 'employee') {
-      this.router.navigate(['/survey']);
-    }
-  }
 
+    const loginData = {
+
+      username: this.username,
+
+      password: this.password,
+
+      role: ''
+    };
+
+    console.log(loginData);
+
+    this.api.login(loginData).subscribe({
+
+      next: (response: any) => {
+
+        console.log(response);
+
+        if(response.role === 'employee') {
+
+          this.router.navigate(['/employee-dashboard']);
+        }
+
+        else if(response.role === 'hr') {
+
+          this.router.navigate(['/dashboard']);
+        }
+
+        else if(response.role === 'manager') {
+
+          alert('Manager Dashboard Coming Soon');
+        }
+      },
+
+      error: (error) => {
+
+        console.log(error);
+
+        alert('Invalid Username or Password');
+      }
+    });
+  }
 }

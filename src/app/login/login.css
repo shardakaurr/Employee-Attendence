@@ -1,40 +1,66 @@
 body {
-  background-color: #f4f6f9;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
+  background: #f4f6f9;
 }
 
+/* LOGIN */
 .login-container {
-  width: 320px;
+  width: 300px;
   margin: 100px auto;
-  padding: 30px;
+  text-align: center;
   background: white;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* DASHBOARD */
+.main-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  background: #007bff;
+  color: white;
+  padding: 15px;
+  height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* PROFILE */
+.profile-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
   text-align: center;
 }
 
-.login-container h2 {
-  margin-bottom: 20px;
+.profile-card img {
+  border-radius: 50%;
 }
 
-input, select {
+/* TABLE */
+table {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border-collapse: collapse;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
+th {
+  background: #007bff;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
-button:hover {
-  background-color: #0056b3;
+td, th {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  margin: 10px 0;
 }

@@ -10,15 +10,30 @@ import { FormsModule } from '@angular/forms';
 })
 export class SurveyComponent {
 
-  questions = [
-    { question: "Are you satisfied with your job?", answer: '' },
-    { question: "Do you feel valued at work?", answer: '' },
-    { question: "Do you plan to stay in company?", answer: '' }
-  ];
+  questions = Array.from({ length: 20 }, (_, i) => ({
+    q: "Question " + (i + 1),
+    type: i < 15 ? "radio" : "text",
+    answer: ""
+  }));
+
+  currentPage = 0;
+  pageSize = 5;
+
+  get paginatedQuestions() {
+    const start = this.currentPage * this.pageSize;
+    return this.questions.slice(start, start + this.pageSize);
+  }
+
+  next() {
+    this.currentPage++;
+  }
+
+  prev() {
+    this.currentPage--;
+  }
 
   submit() {
     console.log(this.questions);
-    alert("Feedback submitted!");
+    alert("Submitted");
   }
-
 }

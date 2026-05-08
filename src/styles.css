@@ -55,3 +55,33 @@ td, th {
   text-align: center;
   border: 1px solid #ddd;
 }
+.container {
+  display: flex;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  height: 100vh;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 8px;
+  background: white;
+  color: black;
+  border: none;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+img {
+  border-radius: 50%;
+}
