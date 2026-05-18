@@ -1,0 +1,55 @@
+.survey-container{
+
+    width: 600px;
+
+    margin: 40px auto;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 10px;
+
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.question-box{
+
+    margin-bottom: 20px;
+}
+
+label{
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-weight: bold;
+}
+
+select,
+textarea{
+
+    width: 100%;
+
+    padding: 10px;
+
+    border-radius: 5px;
+
+    border: 1px solid #ccc;
+}
+
+button{
+
+    background: #1976d2;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}

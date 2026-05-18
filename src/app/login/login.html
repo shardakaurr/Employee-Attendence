@@ -1,23 +1,41 @@
 <div class="login-container">
 
-  <div class="login-box">
+  <div class="login-card">
 
-    <h2>Employee Attrition System</h2>
+    <h1>
+      Employee Attrition
+      <br>
+      System
+    </h1>
+
+    <p>
+      Welcome Back 
+    </p>
+
+    <!-- Username -->
 
     <input
       type="text"
       placeholder="Enter Username"
       [(ngModel)]="username"
-    />
+    >
+
+    <!-- Password -->
 
     <input
       type="password"
       placeholder="Enter Password"
       [(ngModel)]="password"
-    />
+    >
 
-    <button (click)="login()">
+    <!-- Button -->
+
+    <button
+      (click)="login()"
+    >
+
       Login
+
     </button>
 
   </div>

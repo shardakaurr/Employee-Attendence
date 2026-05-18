@@ -1,39 +1,69 @@
 import { Component } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
+
+import { ApiService } from '../services/api';
 
 @Component({
   selector: 'app-survey',
+
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './survey.html'
+
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
+
+  templateUrl: './survey.html',
+
+  styleUrls: ['./survey.css']
 })
+
 export class SurveyComponent {
 
-  questions = Array.from({ length: 20 }, (_, i) => ({
-    q: "Question " + (i + 1),
-    type: i < 15 ? "radio" : "text",
-    answer: ""
-  }));
+  answer1 = '';
 
-  currentPage = 0;
-  pageSize = 5;
+  answer2 = '';
 
-  get paginatedQuestions() {
-    const start = this.currentPage * this.pageSize;
-    return this.questions.slice(start, start + this.pageSize);
-  }
+  answer3 = '';
 
-  next() {
-    this.currentPage++;
-  }
+  constructor(private api: ApiService) {}
 
-  prev() {
-    this.currentPage--;
-  }
+  submitSurvey(){
 
-  submit() {
-    console.log(this.questions);
-    alert("Submitted");
+    const surveyData = {
+
+      employeeId: 1,
+
+      question: `
+        1. Are you satisfied with your job? : ${this.answer1}
+
+        2. Do you feel valued at work? : ${this.answer2}
+
+        3. Any suggestions? : ${this.answer3}
+      `,
+
+      answer: 'Submitted'
+    };
+
+    this.api.saveSurvey(surveyData)
+      .subscribe({
+
+        next:(res)=>{
+
+          console.log(res);
+
+          alert('Survey Submitted Successfully');
+        },
+
+        error:(err)=>{
+
+          console.log(err);
+
+          alert('Error Saving Survey');
+        }
+      });
   }
 }

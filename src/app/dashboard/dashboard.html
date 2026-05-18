@@ -1,1 +1,380 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+
+  <!-- Sidebar -->
+
+  <div class="sidebar">
+
+    <h2>HR Panel</h2>
+
+    <ul>
+
+      <li
+        (click)="selectedSection='dashboard'"
+      >
+        Dashboard
+      </li>
+
+      <li
+        (click)="selectedSection='employees'"
+      >
+        Employees
+      </li>
+
+      <li
+        (click)="selectedSection='attendance'"
+      >
+        Attendance
+      </li>
+
+      <li
+        (click)="selectedSection='leaves'"
+      >
+        Leaves
+      </li>
+
+      <li
+        (click)="selectedSection='survey'"
+      >
+        Survey
+      </li>
+
+      <li>
+        Logout
+      </li>
+
+    </ul>
+
+  </div>
+
+
+
+  <!-- Main -->
+
+  <div class="main-content">
+
+    <h1>
+      Employee Dashboard
+    </h1>
+
+
+
+    <!-- Cards -->
+
+    <div
+      class="cards"
+      *ngIf="
+        selectedSection=='dashboard'
+      "
+    >
+
+      <div class="card total">
+
+        <h2>
+          {{employees.length || 0}}
+        </h2>
+
+        <p>Total Employees</p>
+
+      </div>
+
+
+
+      <div class="card present">
+
+        <h2>
+          {{presentCount || 0}}
+        </h2>
+
+        <p>Present Today</p>
+
+      </div>
+
+
+
+      <div class="card absent">
+
+        <h2>
+          {{absentCount || 0}}
+        </h2>
+
+        <p>Absent Today</p>
+
+      </div>
+
+
+
+      <div class="card leave">
+
+        <h2>
+          {{leaveCount || 0}}
+        </h2>
+
+        <p>On Leave</p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Employees -->
+
+    <div
+      class="table-section"
+      *ngIf="
+        selectedSection=='dashboard'
+        || selectedSection=='employees'
+      "
+    >
+
+      <h2>
+        Employee Information
+      </h2>
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>ID</th>
+
+            <th>Photo</th>
+
+            <th>Name</th>
+
+            <th>Department</th>
+
+            <th>Role</th>
+
+            <th>Status</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="
+              let emp of employees
+            "
+          >
+
+            <td>
+              {{emp.employeeId}}
+            </td>
+
+            <td>
+
+              <img
+                [src]="emp.imageUrl"
+                width="50"
+                height="50"
+                style="
+                  border-radius:50%;
+                  object-fit:cover;
+                "
+              >
+
+            </td>
+
+            <td>
+              {{emp.name}}
+            </td>
+
+            <td>
+              {{emp.department}}
+            </td>
+
+            <td>
+              {{emp.role}}
+            </td>
+
+            <td>
+
+              {{
+                emp.status
+                || 'Present'
+              }}
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+
+    <!-- Attendance -->
+
+    <div
+      class="table-section"
+      *ngIf="
+        selectedSection=='attendance'
+      "
+    >
+
+      <h2>Attendance</h2>
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Name</th>
+
+            <th>Status</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="
+              let emp of employees
+            "
+          >
+
+            <td>
+              {{emp.name}}
+            </td>
+
+            <td>
+
+              {{
+                emp.status
+                || 'Present'
+              }}
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+
+    <!-- Leave -->
+
+    <div
+      class="table-section"
+      *ngIf="
+        selectedSection=='leaves'
+      "
+    >
+
+      <h2>
+        Employees On Leave
+      </h2>
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Name</th>
+
+            <th>Department</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="
+              let emp of employees
+            "
+          >
+
+            <ng-container
+              *ngIf="
+                emp.status=='Leave'
+              "
+            >
+
+              <td>
+                {{emp.name}}
+              </td>
+
+              <td>
+                {{emp.department}}
+              </td>
+
+            </ng-container>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+
+    <!-- Survey -->
+
+    <div
+      class="survey-section"
+      *ngIf="
+        selectedSection=='dashboard'
+        || selectedSection=='survey'
+      "
+    >
+
+      <h2>
+        Survey Responses
+      </h2>
+
+      <div
+        class="survey-card"
+        *ngFor="
+          let s of surveys
+        "
+      >
+
+        <h3>
+
+          Employee ID :
+          {{s.employeeId}}
+
+        </h3>
+
+        <p>
+
+          <b>Question:</b>
+
+          {{s.question}}
+
+        </p>
+
+        <p>
+
+          <b>Answer:</b>
+
+          {{s.answer}}
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

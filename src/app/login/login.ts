@@ -29,47 +29,120 @@ export class LoginComponent {
     private router: Router
   ) {}
 
-  login() {
+  login(){
 
     const loginData = {
 
-      username: this.username,
+      username:
+        this.username.trim(),
 
-      password: this.password,
+      password:
+        this.password.trim(),
 
       role: ''
+
     };
 
     console.log(loginData);
 
-    this.api.login(loginData).subscribe({
+    this.api.login(loginData)
+      .subscribe({
 
-      next: (response: any) => {
+        next:(res:any)=>{
 
-        console.log(response);
+          console.log(res);
 
-        if(response.role === 'employee') {
+          // Save EmployeeId
 
-          this.router.navigate(['/employee-dashboard']);
+          localStorage.setItem(
+            'employeeId',
+            String(res.employeeId)
+          );
+
+          console.log(
+            'EMPLOYEE ID SAVED:',
+            res.employeeId
+          );
+
+          // Save Role
+
+          localStorage.setItem(
+            'role',
+            res.role || ''
+          );
+
+          // Save Username
+
+          localStorage.setItem(
+            'username',
+            res.username
+          );
+
+
+
+          // ROLE BASED LOGIN
+
+          const role =
+            res.role
+            .toLowerCase()
+            .trim();
+
+
+
+          // EMPLOYEE
+
+          if(
+            role === 'employee'
+          ){
+
+            this.router.navigate(
+              ['/employee-dashboard']
+            );
+
+          }
+
+
+
+          // HR OR MANAGER
+
+          else if(
+            role === 'hr'
+            ||
+            role === 'manager'
+          ){
+
+            this.router.navigate(
+              ['/dashboard']
+            );
+
+          }
+
+
+
+          // FALLBACK
+
+          else{
+
+            alert(
+              'Role Not Found'
+            );
+
+          }
+
+        },
+
+        error:(err)=>{
+
+          console.log(err);
+
+          alert(
+            'Invalid Username or Password'
+          );
+
         }
 
-        else if(response.role === 'hr') {
+      });
 
-          this.router.navigate(['/dashboard']);
-        }
-
-        else if(response.role === 'manager') {
-
-          alert('Manager Dashboard Coming Soon');
-        }
-      },
-
-      error: (error) => {
-
-        console.log(error);
-
-        alert('Invalid Username or Password');
-      }
-    });
   }
+
 }

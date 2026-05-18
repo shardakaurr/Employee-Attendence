@@ -1,39 +1,141 @@
-<div class="container">
+<div class="employee-dashboard">
 
-  <h2>Employee List</h2>
+  <!-- Top Header -->
 
-  <div style="text-align:center;">
-    <button (click)="toggleForm()">Add Employee</button>
+  <div class="topbar">
+
+    <h1>
+      Welcome Back,
+      {{employee.name}}
+    </h1>
+
+    <p>
+      Employee Dashboard
+    </p>
+
   </div>
 
-  <div style="text-align:center; margin:10px;">
-    <input placeholder="Search..." [(ngModel)]="searchText">
+
+
+  <!-- Main Grid -->
+
+  <div class="dashboard-grid">
+
+    <!-- Profile Card -->
+
+    <div class="profile-card">
+
+      <img
+        [src]="employee.imageUrl"
+        class="profile-img"
+      >
+
+      <h2>
+        {{employee.name}}
+      </h2>
+
+      <p class="role">
+        {{employee.role}}
+      </p>
+
+      <div class="info">
+
+        <p>
+          <strong>Email:</strong>
+          {{employee.email}}
+        </p>
+
+        <p>
+          <strong>Department:</strong>
+          {{employee.department}}
+        </p>
+
+        <p>
+          <strong>Joining:</strong>
+          {{employee.joiningDate}}
+        </p>
+
+        <p>
+          <strong>Status:</strong>
+          {{employee.status || 'Present'}}
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Performance -->
+
+    <div class="card">
+
+      <h3>
+        Performance
+      </h3>
+
+      <div class="circle">
+
+        92%
+
+      </div>
+
+      <p>
+        Excellent Performance
+      </p>
+
+    </div>
+
+
+
+    <!-- Attendance -->
+
+    <div class="card">
+
+      <h3>
+        Attendance
+      </h3>
+
+      <h1>
+        96%
+      </h1>
+
+      <p>
+        This Month
+      </p>
+
+    </div>
+
+    
+
+
+
+    <!-- Tasks -->
+
+    <div class="card task-card">
+
+      <h3>
+        Current Tasks
+      </h3>
+
+      <ul>
+
+        <li>
+          Complete Dashboard UI
+        </li>
+
+        <li>
+          Submit Weekly Report
+        </li>
+
+        <li>
+          Team Meeting - Friday
+        </li>
+
+      </ul>
+
+    </div>
+
   </div>
-
-  <div *ngIf="showForm" style="text-align:center;">
-    <input placeholder="Name" [(ngModel)]="newEmployee.name"><br>
-    <input placeholder="Department" [(ngModel)]="newEmployee.department"><br>
-    <input placeholder="Role" [(ngModel)]="newEmployee.role"><br>
-
-    <button (click)="addEmployee()">Save</button>
-  </div>
-
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Department</th>
-      <th>Role</th>
-      <th>Action</th>
-    </tr>
-
-    <tr *ngFor="let emp of getFilteredEmployees(); let i = index">
-      <td>{{ emp.name }}</td>
-      <td>{{ emp.department }}</td>
-      <td>{{ emp.role }}</td>
-      <td>
-        <button (click)="deleteEmployee(i)">Delete</button>
-      </td>
-    </tr>
-  </table>
 
 </div>

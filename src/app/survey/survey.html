@@ -1,22 +1,58 @@
-<h2>Survey</h2>
+<div class="survey-container">
 
-<div *ngFor="let q of paginatedQuestions">
+  <h1>Employee Survey</h1>
 
-  <p>{{ q.q }}</p>
+  <div class="question-box">
 
-  <div *ngIf="q.type === 'radio'">
-    <label><input type="radio" [(ngModel)]="q.answer" value="Yes"> Yes</label>
-    <label><input type="radio" [(ngModel)]="q.answer" value="No"> No</label>
+    <label>
+      1. Are you satisfied with your job?
+    </label>
+
+    <select [(ngModel)]="answer1">
+
+      <option value="">Select</option>
+
+      <option value="Yes">Yes</option>
+
+      <option value="No">No</option>
+
+    </select>
+
   </div>
 
-  <div *ngIf="q.type === 'text'">
-    <input [(ngModel)]="q.answer">
+  <div class="question-box">
+
+    <label>
+      2. Do you feel valued at work?
+    </label>
+
+    <select [(ngModel)]="answer2">
+
+      <option value="">Select</option>
+
+      <option value="Yes">Yes</option>
+
+      <option value="No">No</option>
+
+    </select>
+
   </div>
+
+  <div class="question-box">
+
+    <label>
+      3. Any suggestions?
+    </label>
+
+    <textarea
+      [(ngModel)]="answer3"
+      rows="5">
+    </textarea>
+
+  </div>
+
+  <button (click)="submitSurvey()">
+    Submit Survey
+  </button>
 
 </div>
-
-<button (click)="prev()" [disabled]="currentPage===0">Prev</button>
-<button (click)="next()" [disabled]="(currentPage+1)*pageSize>=questions.length">Next</button>
-
-<br><br>
-<button (click)="submit()">Submit</button>

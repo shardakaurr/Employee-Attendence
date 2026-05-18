@@ -1,59 +1,92 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef
+} from '@angular/core';
+
+import { CommonModule }
+from '@angular/common';
+
+import { ApiService }
+from '../services/api';
 
 @Component({
   selector: 'app-employee',
+
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './employee.html'
+
+  imports: [CommonModule],
+
+  templateUrl: './employee.html',
+
+  styleUrls: ['./employee.css']
 })
-export class EmployeeComponent {
 
-  employees = [
-  { name: 'Rahul Sharma', department: 'IT', role: 'Developer' },
-  { name: 'Anjali Verma', department: 'HR', role: 'Manager' },
-  { name: 'Rohit Kumar', department: 'Finance', role: 'Analyst' },
-  { name: 'Neha Singh', department: 'IT', role: 'Tester' },
-  { name: 'Amit Patel', department: 'Operations', role: 'Executive' }
-];
+export class EmployeeComponent
+implements OnInit {
 
-  showForm = false;
+  employee:any = null;
 
-  searchText = '';
+  loading:boolean = true;
 
-  newEmployee = {
-    name: '',
-    department: '',
-    role: ''
-  };
+  constructor(
+    private api: ApiService,
+    private cd: ChangeDetectorRef
+  ) {}
 
-  toggleForm() {
-    this.showForm = !this.showForm;
-  }
+  ngOnInit(): void {
 
-  addEmployee() {
-    if (this.newEmployee.name && this.newEmployee.department && this.newEmployee.role) {
+    console.log(
+      'Employee Page Loaded'
+    );
 
-      this.employees.push({
-        name: this.newEmployee.name,
-        department: this.newEmployee.department,
-        role: this.newEmployee.role
+    const employeeId =
+      localStorage.getItem(
+        'employeeId'
+      );
+
+    console.log(
+      'EMPLOYEE ID:',
+      employeeId
+    );
+
+    this.api.getEmployees()
+      .subscribe({
+
+        next:(data:any)=>{
+
+          console.log(data);
+
+          this.employee =
+            data.find(
+              (e:any)=>
+
+                String(e.employeeId)
+                ===
+                String(employeeId)
+            );
+
+          console.log(
+            'FOUND:',
+            this.employee
+          );
+
+          this.loading = false;
+
+          this.cd.detectChanges();
+
+        },
+
+        error:(err)=>{
+
+          console.log(err);
+
+          this.loading = false;
+
+        }
+
       });
 
-      this.newEmployee = { name: '', department: '', role: '' };
-      this.showForm = false;
-    }
-  }
-
-  deleteEmployee(index: number) {
-    this.employees.splice(index, 1);
-  }
-
-  getFilteredEmployees() {
-    return this.employees.filter(emp =>
-      emp.name.toLowerCase().includes(this.searchText.toLowerCase())
-    );
   }
 
 }
