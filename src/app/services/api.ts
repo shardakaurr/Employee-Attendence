@@ -8,43 +8,135 @@ import { HttpClient } from '@angular/common/http';
 
 export class ApiService {
 
-  apiUrl =
-  'https://localhost:7197/api/Users/login';
+  // ====================================
+  // BASE URL
+  // ====================================
 
-  constructor(private http: HttpClient) { }
+  baseUrl = 'https://localhost:7197/api';
 
-  login(data:any){
+  constructor(
+    private http: HttpClient
+  ) { }
 
-    return this.http.post(
-      this.apiUrl,
-      data
-    );
+  // ====================================
+  // LOGIN
+  // ====================================
 
-  }
-
-  getEmployees(){
-
-    return this.http.get(
-      'https://localhost:7197/api/Employee'
-    );
-
-  }
-
-  getSurveyAnswers(){
-
-    return this.http.get(
-      'https://localhost:7197/api/Survey'
-    );
-
-  }
-
-  saveSurvey(data:any){
+  login(data: any) {
 
     return this.http.post(
 
-      'https://localhost:7197/api/Survey',
+      this.baseUrl + '/Users/login',
 
       data
+
+    );
+
+  }
+
+  // ====================================
+  // EMPLOYEES
+  // ====================================
+
+  getEmployees() {
+
+    return this.http.get(
+
+      this.baseUrl + '/Employee'
+
+    );
+
+  }
+
+  getEmployeesByManager(
+    managerId: number
+  ) {
+
+    return this.http.get(
+
+      `${this.baseUrl}/Employee/manager/${managerId}`
+
+    );
+
+  }
+
+  // ====================================
+  // SURVEY
+  // ====================================
+
+  getSurveyAnswers() {
+
+    return this.http.get(
+
+      this.baseUrl + '/Survey'
+
+    );
+
+  }
+
+  saveSurvey(data: any) {
+
+    return this.http.post(
+
+      this.baseUrl + '/Survey',
+
+      data
+
+    );
+
+  }
+
+  // ====================================
+  // PERFORMANCE REVIEW
+  // ====================================
+
+  savePerformanceReview(
+    data: any
+  ) {
+
+    return this.http.post(
+
+      this.baseUrl + '/PerformanceReview',
+
+      data
+
+    );
+
+  }
+
+  getPerformanceReviews() {
+
+    return this.http.get(
+
+      this.baseUrl + '/PerformanceReview'
+
+    );
+
+  }
+
+  // ====================================
+  // ATTENDANCE
+  // ====================================
+
+  getAttendance() {
+
+    return this.http.get(
+
+      this.baseUrl + '/Attendance'
+
+    );
+
+  }
+
+  // ====================================
+  // ATTRITION RISK
+  // ====================================
+
+  getAttritionRisk() {
+
+    return this.http.get(
+
+      this.baseUrl + '/AttritionRisk'
 
     );
 

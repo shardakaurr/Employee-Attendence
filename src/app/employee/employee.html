@@ -1,4 +1,7 @@
-<div class="employee-dashboard">
+<div
+  class="employee-dashboard"
+  *ngIf="!loading && employee"
+>
 
   <!-- Top Header -->
 
@@ -14,8 +17,6 @@
     </p>
 
   </div>
-
-
 
   <!-- Main Grid -->
 
@@ -64,8 +65,6 @@
 
     </div>
 
-
-
     <!-- Performance -->
 
     <div class="card">
@@ -75,9 +74,7 @@
       </h3>
 
       <div class="circle">
-
         92%
-
       </div>
 
       <p>
@@ -85,8 +82,6 @@
       </p>
 
     </div>
-
-
 
     <!-- Attendance -->
 
@@ -105,10 +100,6 @@
       </p>
 
     </div>
-
-    
-
-
 
     <!-- Tasks -->
 
@@ -136,6 +127,151 @@
 
     </div>
 
+    <!-- Survey -->
+
+    <div class="card survey-link-card">
+
+      <h3>
+        Monthly Survey
+      </h3>
+
+      <p>
+        Please complete employee survey
+      </p>
+
+      <button
+        routerLink="/survey"
+      >
+        Take Survey
+      </button>
+
+    </div>
+
   </div>
+
+  <!-- MANAGER SECTION -->
+
+  <div
+    *ngIf="isManager"
+    class="manager-section"
+  >
+
+    <h2>
+      My Team ({{teamMembers.length}})
+    </h2>
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Photo</th>
+
+          <th>Name</th>
+
+          <th>Department</th>
+
+          <th>Rating</th>
+
+          <th>Feedback</th>
+
+          <th>Action</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="
+          let emp of teamMembers
+          "
+        >
+
+          <td>
+
+            <img
+              [src]="emp.imageUrl"
+              width="50"
+              height="50"
+              style="
+              border-radius:50%;
+              object-fit:cover;
+              "
+            >
+
+          </td>
+
+          <td>
+            {{emp.name}}
+          </td>
+
+          <td>
+            {{emp.department}}
+          </td>
+
+          <td>
+
+            <select
+              [(ngModel)]="
+              ratings[
+              emp.employeeId
+              ]
+              "
+            >
+
+              <option [value]="1">1</option>
+              <option [value]="2">2</option>
+              <option [value]="3">3</option>
+              <option [value]="4">4</option>
+              <option [value]="5">5</option>
+
+            </select>
+
+          </td>
+
+          <td>
+
+            <input
+              type="text"
+              placeholder="Enter Feedback"
+              [(ngModel)]="
+              comments[
+              emp.employeeId
+              ]
+              "
+            >
+
+          </td>
+
+          <td>
+
+            <button
+              (click)="saveReview(emp)"
+            >
+              Save
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+<!-- Loading -->
+
+<div *ngIf="loading">
+
+  <h1>
+    Loading Employee Data...
+  </h1>
 
 </div>

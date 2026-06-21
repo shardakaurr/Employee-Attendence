@@ -147,6 +147,32 @@ table td {
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
+table th:first-child,
+table td:first-child{
+
+    width:70px;
+    text-align:center;
+
+}
+
+table th:nth-child(2),
+table td:nth-child(2){
+
+    width:90px;
+    text-align:center;
+
+}
+
+table img{
+
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
 
 .status {
   padding: 6px 12px;
@@ -202,6 +228,249 @@ table td {
 
   .cards {
     grid-template-columns: 1fr;
+  }
+
+}
+.pagination{
+
+  margin-top:20px;
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:10px;
+
+}
+
+.pagination button{
+
+  padding:8px 16px;
+
+  border:none;
+
+  background:#2563eb;
+
+  color:white;
+
+  border-radius:6px;
+
+  cursor:pointer;
+
+}
+
+.pagination button.active{
+
+  background:#0f172a;
+
+}
+
+.pagination button:disabled{
+
+  background:#bdbdbd;
+
+  cursor:not-allowed;
+
+}
+
+/* ========================= */
+/* Department Filter */
+/* ========================= */
+
+.filter-box{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  margin-bottom:20px;
+
+}
+
+.filter-box select{
+
+  padding:8px 12px;
+
+  border:1px solid #ccc;
+
+  border-radius:6px;
+
+  min-width:180px;
+
+}
+
+/* ========================= */
+/* Right Side Risk Panel */
+/* ========================= */
+
+.risk-panel{
+
+  position:fixed;
+
+  top:20px;
+
+  right:20px;
+
+  width:380px;
+
+  height:calc(100vh - 40px);
+
+  background:#fff;
+
+  box-shadow:-5px 0 20px rgba(0,0,0,.15);
+
+  border-radius:12px;
+
+  padding:20px;
+
+  overflow-y:auto;
+
+  z-index:9999;
+
+  animation:slideIn .3s ease;
+
+}
+
+@keyframes slideIn{
+
+  from{
+
+    right:-420px;
+
+    opacity:0;
+
+  }
+
+  to{
+
+    right:20px;
+
+    opacity:1;
+
+  }
+
+}
+
+.risk-header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+}
+
+.risk-header h2{
+
+  font-size:22px;
+
+  color:#2563eb;
+
+}
+
+.close-btn{
+
+  width:35px;
+
+  height:35px;
+
+  border:none;
+
+  background:#ef4444;
+
+  color:#fff;
+
+  border-radius:50%;
+
+  cursor:pointer;
+
+  font-size:18px;
+
+}
+
+.close-btn:hover{
+
+  background:#dc2626;
+
+}
+
+.close-panel{
+
+  width:100%;
+
+  margin-top:20px;
+
+  padding:12px;
+
+  border:none;
+
+  background:#2563eb;
+
+  color:#fff;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+  font-size:15px;
+
+}
+
+.close-panel:hover{
+
+  background:#1d4ed8;
+
+}
+
+.risk-panel p{
+
+  margin:10px 0;
+
+  line-height:1.6;
+
+}
+
+.risk-panel ul{
+
+  margin-top:10px;
+
+  padding-left:20px;
+
+}
+
+.risk-panel li{
+
+  margin-bottom:8px;
+
+}
+
+.risk-panel hr{
+
+  margin:15px 0;
+
+}
+
+/* ========================= */
+/* Responsive */
+/* ========================= */
+
+@media(max-width:900px){
+
+  .risk-panel{
+
+    width:100%;
+
+    right:0;
+
+    top:0;
+
+    height:100vh;
+
+    border-radius:0;
+
   }
 
 }

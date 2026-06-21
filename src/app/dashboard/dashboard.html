@@ -1,6 +1,8 @@
 <div class="dashboard-container">
 
+  <!-- ========================= -->
   <!-- Sidebar -->
+  <!-- ========================= -->
 
   <div class="sidebar">
 
@@ -9,33 +11,38 @@
     <ul>
 
       <li
-        (click)="selectedSection='dashboard'"
-      >
+        (click)="selectedSection='dashboard'">
         Dashboard
       </li>
 
       <li
-        (click)="selectedSection='employees'"
-      >
+        (click)="selectedSection='employees'">
         Employees
       </li>
 
       <li
-        (click)="selectedSection='attendance'"
-      >
+        (click)="selectedSection='attendance'">
         Attendance
       </li>
 
       <li
-        (click)="selectedSection='leaves'"
-      >
+        (click)="selectedSection='leaves'">
         Leaves
       </li>
 
       <li
-        (click)="selectedSection='survey'"
-      >
+        (click)="selectedSection='survey'">
         Survey
+      </li>
+
+      <li
+        (click)="selectedSection='reviews'">
+        Performance Reviews
+      </li>
+
+      <li
+        (click)="selectedSection='attrition'">
+        Attrition Risk
       </li>
 
       <li>
@@ -46,68 +53,49 @@
 
   </div>
 
-
-
-  <!-- Main -->
+  <!-- ========================= -->
+  <!-- Main Content -->
+  <!-- ========================= -->
 
   <div class="main-content">
 
-    <h1>
-      Employee Dashboard
-    </h1>
+    <h1>HR Dashboard</h1>
 
-
-
-    <!-- Cards -->
+    <!-- ========================= -->
+    <!-- Dashboard Cards -->
+    <!-- ========================= -->
 
     <div
       class="cards"
-      *ngIf="
-        selectedSection=='dashboard'
-      "
-    >
+      *ngIf="selectedSection=='dashboard'">
 
       <div class="card total">
 
-        <h2>
-          {{employees.length || 0}}
-        </h2>
+        <h2>{{employees.length}}</h2>
 
         <p>Total Employees</p>
 
       </div>
 
-
-
       <div class="card present">
 
-        <h2>
-          {{presentCount || 0}}
-        </h2>
+        <h2>{{presentCount}}</h2>
 
         <p>Present Today</p>
 
       </div>
 
-
-
       <div class="card absent">
 
-        <h2>
-          {{absentCount || 0}}
-        </h2>
+        <h2>{{absentCount}}</h2>
 
         <p>Absent Today</p>
 
       </div>
 
-
-
       <div class="card leave">
 
-        <h2>
-          {{leaveCount || 0}}
-        </h2>
+        <h2>{{leaveCount}}</h2>
 
         <p>On Leave</p>
 
@@ -115,21 +103,19 @@
 
     </div>
 
-
-
+        <!-- ========================= -->
     <!-- Employees -->
+    <!-- ========================= -->
 
     <div
       class="table-section"
       *ngIf="
-        selectedSection=='dashboard'
-        || selectedSection=='employees'
-      "
-    >
+      selectedSection=='dashboard'
+      ||
+      selectedSection=='employees'
+      ">
 
-      <h2>
-        Employee Information
-      </h2>
+      <h2>Employee Information</h2>
 
       <table>
 
@@ -137,17 +123,29 @@
 
           <tr>
 
-            <th>ID</th>
+            <th style="width:70px">
+              ID
+            </th>
 
-            <th>Photo</th>
+            <th style="width:90px">
+              Photo
+            </th>
 
-            <th>Name</th>
+            <th>
+              Name
+            </th>
 
-            <th>Department</th>
+            <th>
+              Department
+            </th>
 
-            <th>Role</th>
+            <th>
+              Role
+            </th>
 
-            <th>Status</th>
+            <th style="width:120px">
+              Status
+            </th>
 
           </tr>
 
@@ -157,46 +155,61 @@
 
           <tr
             *ngFor="
-              let emp of employees
-            "
-          >
+            let emp of paginatedEmployees
+            ">
 
             <td>
+
               {{emp.employeeId}}
+
             </td>
 
             <td>
 
               <img
+
                 [src]="emp.imageUrl"
-                width="50"
-                height="50"
-                style="
-                  border-radius:50%;
-                  object-fit:cover;
+
+                (error)="
+                $any($event.target).src='assets/profile.png'
                 "
+
+                style="
+                width:50px;
+                height:50px;
+                border-radius:50%;
+                object-fit:cover;
+                "
+
               >
 
             </td>
 
             <td>
+
               {{emp.name}}
+
             </td>
 
             <td>
+
               {{emp.department}}
+
             </td>
 
             <td>
+
               {{emp.role}}
+
             </td>
 
             <td>
 
-              {{
-                emp.status
-                || 'Present'
-              }}
+              <span>
+
+                {{emp.status}}
+
+              </span>
 
             </td>
 
@@ -206,18 +219,62 @@
 
       </table>
 
+      <!-- ========================= -->
+      <!-- Pagination -->
+      <!-- ========================= -->
+
+      <div class="pagination">
+
+        <button
+
+          (click)="changePage(currentPage-1)"
+
+          [disabled]="currentPage==1">
+
+          Previous
+
+        </button>
+
+        <button
+
+          *ngFor="
+          let p of [].constructor(totalPages);
+          let i=index
+          "
+
+          (click)="changePage(i+1)"
+
+          [class.active]="
+          currentPage==i+1
+          ">
+
+          {{i+1}}
+
+        </button>
+
+        <button
+
+          (click)="changePage(currentPage+1)"
+
+          [disabled]="
+          currentPage==totalPages
+          ">
+
+          Next
+
+        </button>
+
+      </div>
+
     </div>
 
-
-
+        <!-- ========================= -->
     <!-- Attendance -->
+    <!-- ========================= -->
 
     <div
       class="table-section"
-      *ngIf="
-        selectedSection=='attendance'
-      "
-    >
+      *ngIf="selectedSection=='attendance'">
 
       <h2>Attendance</h2>
 
@@ -227,7 +284,11 @@
 
           <tr>
 
+            <th>Employee ID</th>
+
             <th>Name</th>
+
+            <th>Department</th>
 
             <th>Status</th>
 
@@ -238,21 +299,17 @@
         <tbody>
 
           <tr
-            *ngFor="
-              let emp of employees
-            "
-          >
+            *ngFor="let emp of employees">
+
+            <td>{{emp.employeeId}}</td>
+
+            <td>{{emp.name}}</td>
+
+            <td>{{emp.department}}</td>
 
             <td>
-              {{emp.name}}
-            </td>
 
-            <td>
-
-              {{
-                emp.status
-                || 'Present'
-              }}
+              <span>{{emp.status}}</span>
 
             </td>
 
@@ -264,26 +321,23 @@
 
     </div>
 
-
-
-    <!-- Leave -->
+    <!-- ========================= -->
+    <!-- Leave Employees -->
+    <!-- ========================= -->
 
     <div
       class="table-section"
-      *ngIf="
-        selectedSection=='leaves'
-      "
-    >
+      *ngIf="selectedSection=='leaves'">
 
-      <h2>
-        Employees On Leave
-      </h2>
+      <h2>Employees On Leave</h2>
 
       <table>
 
         <thead>
 
           <tr>
+
+            <th>Employee ID</th>
 
             <th>Name</th>
 
@@ -296,24 +350,16 @@
         <tbody>
 
           <tr
-            *ngFor="
-              let emp of employees
-            "
-          >
+            *ngFor="let emp of employees">
 
             <ng-container
-              *ngIf="
-                emp.status=='Leave'
-              "
-            >
+              *ngIf="emp.status=='Leave'">
 
-              <td>
-                {{emp.name}}
-              </td>
+              <td>{{emp.employeeId}}</td>
 
-              <td>
-                {{emp.department}}
-              </td>
+              <td>{{emp.name}}</td>
+
+              <td>{{emp.department}}</td>
 
             </ng-container>
 
@@ -325,28 +371,19 @@
 
     </div>
 
-
-
+    <!-- ========================= -->
     <!-- Survey -->
+    <!-- ========================= -->
 
     <div
       class="survey-section"
-      *ngIf="
-        selectedSection=='dashboard'
-        || selectedSection=='survey'
-      "
-    >
+      *ngIf="selectedSection=='survey'">
 
-      <h2>
-        Survey Responses
-      </h2>
+      <h2>Survey Responses</h2>
 
       <div
         class="survey-card"
-        *ngFor="
-          let s of surveys
-        "
-      >
+        *ngFor="let s of surveys">
 
         <h3>
 
@@ -357,21 +394,485 @@
 
         <p>
 
-          <b>Question:</b>
-
-          {{s.question}}
+          <b>Job Satisfaction :</b>
+          {{s.jobSatisfaction}}
 
         </p>
 
         <p>
 
-          <b>Answer:</b>
+          <b>Work Pressure :</b>
+          {{s.workPressure}}
 
-          {{s.answer}}
+        </p>
+
+        <p>
+
+          <b>Manager Support :</b>
+          {{s.managerSupport}}
+
+        </p>
+
+        <p>
+
+          <b>Leave Company :</b>
+
+          {{s.leaveCompany ? 'Yes' : 'No'}}
+
+        </p>
+
+        <p>
+
+          <b>Benefits :</b>
+
+          {{s.benefits}}
+
+        </p>
+
+        <p>
+
+          <b>Suggestions :</b>
+
+          {{s.suggestions || 'No Suggestions'}}
 
         </p>
 
       </div>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- Performance Reviews -->
+    <!-- ========================= -->
+
+    <div
+      class="table-section"
+      *ngIf="selectedSection=='reviews'">
+
+      <h2>Performance Reviews</h2>
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Employee ID</th>
+
+            <th>Manager ID</th>
+
+            <th>Rating</th>
+
+            <th>Comments</th>
+
+            <th>Review Date</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="let r of reviews">
+
+            <td>{{r.employeeId}}</td>
+
+            <td>{{r.managerId}}</td>
+
+            <td>⭐ {{r.rating}}</td>
+
+            <td>{{r.comments}}</td>
+
+            <td>{{r.reviewDate}}</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+        <!-- ========================= -->
+    <!-- ATTRITION RISK -->
+    <!-- ========================= -->
+
+    <div
+      class="table-section"
+      *ngIf="selectedSection=='attrition'">
+
+      <h2>
+
+        Attrition Risk Analysis
+
+      </h2>
+
+      <!-- Department Filter -->
+
+      <div
+        class="filter-box">
+
+        <label>
+
+          <b>Department :</b>
+
+        </label>
+
+        <select
+
+          [(ngModel)]="selectedDepartment">
+
+          <option value="All">
+
+            All Departments
+
+          </option>
+
+          <option value="IT">
+
+            IT
+
+          </option>
+
+          <option value="HR">
+
+            HR
+
+          </option>
+
+          <option value="Finance">
+
+            Finance
+
+          </option>
+
+          <option value="Marketing">
+
+            Marketing
+
+          </option>
+
+          <option value="Sales">
+
+            Sales
+
+          </option>
+
+        </select>
+
+      </div>
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>ID</th>
+
+            <th>Name</th>
+
+            <th>Department</th>
+
+            <th>Risk Score</th>
+
+            <th>Risk Level</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+  *ngFor="
+  let r of paginatedRiskEmployees
+  ">
+
+            <td>
+
+              {{r.employeeId}}
+
+            </td>
+
+            <td>
+
+              {{r.name}}
+
+            </td>
+
+            <td>
+
+              {{r.department}}
+
+            </td>
+
+            <td>
+
+              {{r.score}}
+
+            </td>
+
+            <td>
+
+              <span
+
+                (click)="openRiskPanel(r)"
+
+                [style.color]="
+
+                getRiskColor(r.riskLevel)
+
+                "
+
+                style="
+
+                cursor:pointer;
+
+                font-weight:bold;
+
+                text-decoration:underline;
+
+                ">
+
+                {{r.riskLevel}}
+
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+
+<!-- ATTRITION PAGINATION -->
+
+<div class="pagination">
+
+  <button
+    (click)="changeRiskPage(currentRiskPage-1)"
+    [disabled]="currentRiskPage==1">
+
+    Previous
+
+  </button>
+
+  <button
+
+    *ngFor="
+      let p of [].constructor(totalRiskPages);
+      let i=index
+    "
+
+    (click)="changeRiskPage(i+1)"
+
+    [class.active]="currentRiskPage==i+1">
+
+    {{i+1}}
+
+  </button>
+
+  <button
+
+    (click)="changeRiskPage(currentRiskPage+1)"
+
+    [disabled]="currentRiskPage==totalRiskPages">
+
+    Next
+
+  </button>
+
+</div>
+
+
+
+    </div>
+
+        <!-- ================================= -->
+    <!-- RIGHT SIDE RISK PANEL -->
+    <!-- ================================= -->
+
+    <div
+
+      class="risk-panel"
+
+      *ngIf="riskPanelOpen"
+
+    >
+
+      <div class="risk-header">
+
+        <h2>
+
+          Employee Risk Details
+
+        </h2>
+
+        <button
+
+          class="close-btn"
+
+          (click)="closeRiskPanel()"
+
+        >
+
+          ✕
+
+        </button>
+
+      </div>
+
+      <hr>
+
+      <p>
+
+        <b>Employee ID :</b>
+
+        {{selectedRiskEmployee?.employeeId}}
+
+      </p>
+
+      <p>
+
+        <b>Name :</b>
+
+        {{selectedRiskEmployee?.name}}
+
+      </p>
+
+      <p>
+
+        <b>Department :</b>
+
+        {{selectedRiskEmployee?.department}}
+
+      </p>
+
+      <p>
+
+  <b>Manager :</b>
+
+  {{selectedRiskEmployee?.managerName}}
+
+</p>
+
+      <p>
+
+        <b>Risk Score :</b>
+
+        {{selectedRiskEmployee?.score}}
+
+      </p>
+
+      <p>
+
+  <b>Survey Score :</b>
+
+  {{selectedRiskEmployee?.surveyScore}}
+
+</p>
+
+
+
+      <p>
+
+        <b>Risk Level :</b>
+
+        <span
+
+          [style.color]="
+
+          getRiskColor(
+
+          selectedRiskEmployee?.riskLevel
+
+          )
+
+          "
+
+        >
+
+          {{selectedRiskEmployee?.riskLevel}}
+
+        </span>
+
+      </p>
+
+      <hr>
+
+      <h3>
+
+        Why Employee is at Risk?
+
+      </h3>
+
+      <ul>
+
+        <li
+
+          *ngFor="
+
+          let reason of riskReasons
+
+          "
+
+        >
+
+          {{reason}}
+
+        </li>
+
+      </ul>
+
+      <hr>
+
+      <hr>
+
+<p>
+
+  <b>6 Month Attendance :</b>
+
+  {{selectedRiskEmployee?.attendancePercentage}}%
+
+</p>
+
+<p>
+
+  <b>Average Performance :</b>
+
+  {{selectedRiskEmployee?.averageRating}}
+
+  / 5
+
+</p>
+
+      <h3>
+
+        HR Recommendation
+
+      </h3>
+
+      <p>
+
+        {{selectedRiskEmployee?.recommendation}}
+
+      </p>
+
+      <button
+
+        class="close-panel"
+
+        (click)="closeRiskPanel()"
+
+      >
+
+        Close
+
+      </button>
 
     </div>
 

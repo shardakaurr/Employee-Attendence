@@ -1,27 +1,19 @@
 import { Component } from '@angular/core';
-
 import { FormsModule } from '@angular/forms';
-
 import { Router } from '@angular/router';
-
 import { ApiService } from '../services/api';
 
 @Component({
   selector: 'app-login',
-
   standalone: true,
-
   imports: [FormsModule],
-
   templateUrl: './login.html',
-
   styleUrls: ['./login.css']
 })
 
 export class LoginComponent {
 
   username = '';
-
   password = '';
 
   constructor(
@@ -29,18 +21,12 @@ export class LoginComponent {
     private router: Router
   ) {}
 
-  login(){
+  login() {
 
     const loginData = {
-
-      username:
-        this.username.trim(),
-
-      password:
-        this.password.trim(),
-
+      username: this.username.trim(),
+      password: this.password.trim(),
       role: ''
-
     };
 
     console.log(loginData);
@@ -48,52 +34,31 @@ export class LoginComponent {
     this.api.login(loginData)
       .subscribe({
 
-        next:(res:any)=>{
+        next: (res: any) => {
 
           console.log(res);
-
-          // Save EmployeeId
 
           localStorage.setItem(
             'employeeId',
             String(res.employeeId)
           );
 
-          console.log(
-            'EMPLOYEE ID SAVED:',
-            res.employeeId
-          );
-
-          // Save Role
-
           localStorage.setItem(
             'role',
             res.role || ''
           );
-
-          // Save Username
 
           localStorage.setItem(
             'username',
             res.username
           );
 
-
-
-          // ROLE BASED LOGIN
-
           const role =
             res.role
             .toLowerCase()
             .trim();
 
-
-
-          // EMPLOYEE
-
-          if(
-            role === 'employee'
-          ){
+          if (role === 'employee') {
 
             this.router.navigate(
               ['/employee-dashboard']
@@ -101,15 +66,7 @@ export class LoginComponent {
 
           }
 
-
-
-          // HR OR MANAGER
-
-          else if(
-            role === 'hr'
-            ||
-            role === 'manager'
-          ){
+          else if (role === 'hr') {
 
             this.router.navigate(
               ['/dashboard']
@@ -117,11 +74,18 @@ export class LoginComponent {
 
           }
 
+          else if (
+  role === 'manager' ||
+  role === 'project manager'
+) {
 
+  this.router.navigate(
+    ['/employee-dashboard']
+  );
 
-          // FALLBACK
+}
 
-          else{
+          else {
 
             alert(
               'Role Not Found'
@@ -131,7 +95,7 @@ export class LoginComponent {
 
         },
 
-        error:(err)=>{
+        error: (err: any) => {
 
           console.log(err);
 
