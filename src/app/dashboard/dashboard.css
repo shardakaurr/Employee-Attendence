@@ -474,3 +474,41 @@ table img{
   }
 
 }
+.ai-box{
+
+background:#f8fafc;
+
+padding:15px;
+
+border-radius:10px;
+
+border:1px solid #d1d5db;
+
+margin-top:10px;
+
+white-space:pre-wrap;
+
+font-size:14px;
+
+line-height:24px;
+
+color:#111827;
+
+}
+.ai-box{
+    background:#f8fafc;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    padding:18px;
+}
+
+.ai-box h4{
+    margin-top:15px;
+    margin-bottom:8px;
+    color:#2563eb;
+}
+
+.ai-box p{
+    margin:0;
+    line-height:1.7;
+}

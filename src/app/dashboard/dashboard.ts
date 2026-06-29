@@ -107,19 +107,33 @@ implements OnInit {
 
   ngOnInit():void{
 
-    console.log(
+    console.log("1");
 
-      'HR Dashboard Loaded'
+  this.loadEmployees();
 
-    );
+  console.log("2");
 
-    this.loadEmployees();
+  this.loadAttendance();
 
-this.loadAttendance();
+  console.log("3");
 
-this.loadSurveys();
+  this.loadSurveys();
 
-this.loadReviews();
+  console.log("4");
+
+  this.loadReviews();
+
+  console.log("5");
+
+  setTimeout(() => {
+
+    console.log("6");
+
+    this.loadAttritionRisk();
+
+  }, 1000);
+
+
 
 
   }
@@ -248,13 +262,21 @@ changeRiskPage(page:number){
 
   openRiskPanel(emp:any){
 
-    this.selectedRiskEmployee=emp;
+    this.selectedRiskEmployee = {
+
+        ...emp,
+
+        aiRecommendation:null
+
+    };
 
     this.showRiskDetails(emp);
 
-    this.riskPanelOpen=true;
+    this.riskPanelOpen = true;
 
-  }
+    this.loadAIRecommendation(emp.employeeId);
+
+}
 
   closeRiskPanel(){
 
@@ -265,6 +287,55 @@ changeRiskPage(page:number){
     this.riskReasons=[];
 
   }
+  loadAIRecommendation(employeeId:number){
+    console.log("Calling AI API...");
+  console.log(employeeId);
+
+  this.api.getAIRecommendation(employeeId)
+
+  .subscribe({
+
+    next:(res:any)=>{
+
+  console.log("AI RESPONSE");
+
+  console.log(res);
+
+  if(this.selectedRiskEmployee){
+
+    this.selectedRiskEmployee.aiRecommendation = res;
+
+    this.cdr.detectChanges();
+
+}
+
+this.cdr.detectChanges();
+
+},
+
+    error:(err:any)=>{
+
+  console.log(err);
+
+  if(this.selectedRiskEmployee){
+
+      this.selectedRiskEmployee.aiRecommendation = {
+
+          summary:"Unable to generate AI recommendation.",
+
+          hrAction:"",
+
+          retentionTip:""
+
+      };
+
+  }
+
+}
+
+  });
+
+}
 
   // ==================================
   // RISK DETAILS
@@ -273,7 +344,6 @@ showRiskDetails(emp:any){
 
   this.riskReasons=[];
 
-  this.selectedRiskEmployee=emp;
 
   if(emp.reason){
 
@@ -349,7 +419,6 @@ showRiskDetails(emp:any){
 
         ).length;
 
-        this.loadAttritionRisk();
 
 
         this.cdr.detectChanges();
@@ -388,7 +457,6 @@ loadAttendance(){
 
       ];
 
-      this.loadAttritionRisk();
 
       this.cdr.detectChanges();
 
@@ -426,7 +494,6 @@ loadAttendance(){
 
         ];
 
-        this.loadAttritionRisk();
 
         this.cdr.detectChanges();
 
@@ -464,7 +531,6 @@ loadAttendance(){
 
         ];
 
-        this.loadAttritionRisk();
 
 
         this.cdr.detectChanges();
@@ -481,35 +547,32 @@ loadAttendance(){
 
   }
 
-  // ==================================
-// LOAD ATTRITION
-// ==================================
+  loadAttritionRisk() {
 
-loadAttritionRisk(){
+  console.log("Calling Attrition API...");
 
-  this.api.getAttritionRisk()
+  this.api.getAttritionRisk().subscribe({
 
-  .subscribe({
+    next: (res: any) => {
 
-    next:(res:any)=>{
-
-      console.log("ATTRITION");
-
+      console.log("SUCCESS");
       console.log(res);
 
-      this.attritionRisks=[
+      this.attritionRisks = res;
 
-        ...(res||[])
+      console.log("Total Records:", this.attritionRisks.length);
 
-      ];
+      console.log("First Record:", this.attritionRisks[0]);
 
-      this.currentRiskPage=1;
+      this.currentRiskPage = 1;
 
       this.cdr.detectChanges();
 
     },
 
-    error:(err:any)=>{
+    error: (err: any) => {
+
+      console.log("ERROR");
 
       console.log(err);
 
@@ -518,7 +581,6 @@ loadAttritionRisk(){
   });
 
 }
-
    
     // ==================================
   // RISK COLOR

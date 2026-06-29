@@ -142,4 +142,14 @@ export class ApiService {
 
   }
 
+  getAIRecommendation(employeeId: number) {
+
+  return this.http.get(
+
+    `${this.baseUrl}/AttritionRisk/ai/${employeeId}`
+
+  );
+
+}
+
 }

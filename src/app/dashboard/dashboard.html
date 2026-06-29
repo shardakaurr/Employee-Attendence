@@ -832,12 +832,26 @@
 
       <hr>
 
+<h3>Attendance Details</h3>
+
 <p>
+  <b>Present Days :</b>
+  {{selectedRiskEmployee?.attendancePresent}}
+</p>
 
-  <b>6 Month Attendance :</b>
+<p>
+  <b>Absent Days :</b>
+  {{selectedRiskEmployee?.attendanceAbsent}}
+</p>
 
+<p>
+  <b>Leave Days :</b>
+  {{selectedRiskEmployee?.attendanceLeave}}
+</p>
+
+<p>
+  <b>Attendance Percentage :</b>
   {{selectedRiskEmployee?.attendancePercentage}}%
-
 </p>
 
 <p>
@@ -861,7 +875,36 @@
         {{selectedRiskEmployee?.recommendation}}
 
       </p>
+      <hr>
 
+<h3>
+
+🤖 AI Recommendation
+
+</h3>
+
+<div class="ai-box">
+
+    <div *ngIf="!selectedRiskEmployee?.aiRecommendation">
+
+        Loading AI Recommendation...
+
+    </div>
+
+    <div *ngIf="selectedRiskEmployee?.aiRecommendation">
+
+        <h4>📋 Employee Summary</h4>
+        <p>{{selectedRiskEmployee.aiRecommendation.summary}}</p>
+
+        <h4>👨‍💼 HR Action</h4>
+        <p>{{selectedRiskEmployee.aiRecommendation.hrAction}}</p>
+
+        <h4>🎯 Retention Strategy</h4>
+        <p>{{selectedRiskEmployee.aiRecommendation.retentionTip}}</p>
+
+    </div>
+
+</div>
       <button
 
         class="close-panel"
